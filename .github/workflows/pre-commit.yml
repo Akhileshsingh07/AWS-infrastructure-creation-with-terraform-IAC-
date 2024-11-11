@@ -1,22 +1,45 @@
-name: Terraform Linting
+name: Terraform Linting and Validation
+
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
-      - main
+      - main       
+  pull_request:
+    branches:
+      - main       
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  
 
-      - name: Set up TFLint
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'   
+
+      - name: Install pre-commit
+        run: pip install pre-commit  
+
+      - name: Install pre-commit hooks
+        run: pre-commit install  
+
+      - name: Run pre-commit hooks
+        run: pre-commit run --all-files 
+
+      - name: Install TFLint
         run: |
-          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash   # Install TFLint
 
       - name: Run TFLint
-        run: tflint --module --config=.tflint.hcl
+        run: tflint --module --config=.tflint.hcl  
+
+      - name: Run Terraform validate
+        run: terraform validate
+
+      - name: Run Terraform fmt
+        run: terraform fmt -check -diff  
+
