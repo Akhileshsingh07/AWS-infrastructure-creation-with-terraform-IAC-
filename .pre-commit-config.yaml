@@ -28,5 +28,6 @@ repos:
     rev: v0.1.22
     hooks:
       - id: tflint
+      - id: terraform_tfsec
 
       - id: terraform-validate
