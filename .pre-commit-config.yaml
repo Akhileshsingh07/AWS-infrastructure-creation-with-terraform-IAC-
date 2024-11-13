@@ -28,6 +28,9 @@ repos:
     rev: v0.1.22
     hooks:
       - id: tflint
-      - id: terraform_tfsec
-
       - id: terraform-validate
+
+ - repo: https://github.com/antonbabenko/pre-commit-terraform #open source repo ,with built-in hooks
+   rev: "v1.74.1"
+   hooks:
+     - id: terraform_tfsec       
