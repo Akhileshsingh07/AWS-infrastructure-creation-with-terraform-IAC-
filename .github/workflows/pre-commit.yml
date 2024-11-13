@@ -3,10 +3,10 @@ name: Terraform Linting and Validation
 on:
   push:
     branches:
-      - main      
+      - main
   pull_request:
     branches:
-      - main        
+      - main
 
 jobs:
   lint:
@@ -26,18 +26,16 @@ jobs:
 
       - name: Install TFLint
         run: |
-          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash   # Install TFLint
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+      - name: Install tfsec
+        run: |
+          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
 
       - name: Install pre-commit hooks
         run: pre-commit install   
- 
-      # - name: Run TFLint
-      #   run: tflint --module --config=.tflint.hcl  
-
-      # - name: Run Terraform validate
-      #   run: terraform validate   
 
       - name: Run pre-commit hooks
-        run: pre-commit run --all-files          
+        run: pre-commit run --all-files
 
 
