@@ -1,3 +1,16 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+provider "aws" {
+  region = "ap-south-1"
+}
+
+
 resource "aws_vpc" "my-vpc" {
   cidr_block = var.cidr
    tags = {
@@ -99,7 +112,7 @@ resource "aws_instance" "webserver1" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.websg.id]
   subnet_id              = aws_subnet.my-subnet1.id
-  user_data              = base64encode(file("userdata.sh"))
+
 
   tags = {
     Name = "t-ec2-1"
@@ -111,7 +124,7 @@ resource "aws_instance" "webserver2" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.websg.id]
   subnet_id              = aws_subnet.my-subnet2.id
-  user_data              = base64encode(file("userdata1.sh"))
+
 
   tags = {
     Name = "t-ec2-2"
